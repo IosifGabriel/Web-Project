@@ -1,0 +1,124 @@
+<!doctype html>
+<html> 
+    <head>
+           <!-- Meta Tags for Bootstrap 4 -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        
+        <title> <%=title%> </title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/index.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel='stylesheet' href='../vendor/bootstrap/css/bootstrap.css'>
+        <link rel='stylesheet' href='../css/style.css'>
+
+          <!--FAVICON-->
+        <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+        <% if(title=="Edit Article") { %>
+            <link rel="apple-touch-icon" sizes="180x180" href="../../images/apple-touch-icon.png">
+            <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32x32.png">
+            <link rel="icon" type="image/png" sizes="16x16" href="../../images/favicon-16x16.png">
+        <% } %>
+        <% if(title=="About me") {%>
+            <link rel="stylesheet" href="../css/about.css">
+        <% } %>
+
+
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container">
+              <a class="navbar-brand" href='/'>Iosif WeBDeV</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href='/'>Home
+                      <% if(title == "Home") { %>
+                        <span class="sr-only">(current)</span>
+                      <% } %>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href='/about'>About</a>
+                    <% if(title == "Despre mine") { %>
+                        <span class="sr-only">(current)</span>
+                      <% } %>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href='/mystory'>My story into WeBDeV</a>
+                    <% if(title == "Mystory") { %>
+                        <span class="sr-only">(current)</span>
+                      <% } %>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href='/blog'>Blog</a>
+                    <% if(title == "Blog" || title== "Login" || title=="Register" || title=="Add Articles" || title=="Edit Article") { %>
+                        <span class="sr-only">(current)</span>
+                        <% if(locals.user) { %>
+                            <% if(locals.user.admin == true) { %>
+                                <li class="nav-item">
+                                    <a class="nav-link" href='/articles/add'>Add an article</a>
+                                        <span class="sr-only">(current)</span>
+                                </li>
+                            <% } %>
+                                <li class="nav-item">
+                                    <a class="nav-link" href='/users/logout'> Logout </a>
+                                         <span class="sr-only">(current)</span>
+                                </li>
+                            
+                        <% }else {%>
+                            <li class="nav-item">
+                                    <a class="nav-link" href='/users/login'> Login </a>
+                                        <span class="sr-only">(current)</span>
+                            </li>
+                            <li class="nav-item">
+                                    <a class="nav-link" href='/users/register'> Register </a>
+                                      <span class="sr-only">(current)</span>
+                            </li>
+                        <% } %>
+                      <% } %>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href='/book'>Book a meeting!</a>
+                    <% if(title == "Book a meeting") { %>
+                        <span class="sr-only">(current)</span>
+                      <% } %>
+                  </li>
+                 
+                </ul>
+              </div>
+            </div>
+          </nav>
+
+          <%- body %>
+          
+          <%- messages() %>
+          <% if(locals.errors) { %>  
+              <% for(var i = 0; i < errors.length; i++) { %>
+                  <div class="alert alert-danger"> 
+                      <%= errors[i].msg %>
+                  </div>
+              <% } %>
+          <% } %>
+    </body>
+      <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Iosif the WeBDeV consultancy - 2020</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src='../js/main.js'> </script>
+</html>

@@ -1,0 +1,90 @@
+html {
+    scroll-behavior: smooth;
+  }
+
+.paral {
+    min-height: 768px;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: 50% 50%;
+    border-radius:0%;
+    }
+
+.paralsmall{
+    min-height:150px !important;
+}
+
+.paralimgtop{
+    background-image: url("../images/parallax.jpg");
+}
+
+
+.paralimgsecond{
+    background-image:url("../images/parallax2.jpg");
+}
+/* Paragraph for Parallax Section */ 
+.paral p {
+    font-size: 24px;
+    color:#f5f5f5;
+    text-align: center;
+    line-height: 60px;
+    }
+     
+    /* Heading for Parallax Section */ 
+    .paral h1 {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 60px;
+    text-align: center;
+    padding-top: 60px;
+    padding-bottom:-10px;
+    line-height: 100px;
+    }
+
+/* round photo from index */
+.center
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.justifyright
+{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding:10px;
+}
+
+@media only screen and (max-width: 928px)
+{
+    .justifyright
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+}
+
+.arrow .fa {
+	font-size: 50px;
+	color: #FFF;
+}
+
+.myphoto
+{
+    max-width: 260px;
+    height: auto;
+    border: 10px inset rgba(153,69,60,0.43);
+    border-radius: 100%;
+}
+
+.RestOfPhotos{
+    max-width:350px;
+    height:auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.h1{
+    padding-bottom:30px;
+}
