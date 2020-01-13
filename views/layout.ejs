@@ -24,14 +24,40 @@
             <link rel="icon" type="image/png" sizes="16x16" href="../../images/favicon-16x16.png">
         <% } %>
         <% if(title=="About me") {%>
-            <link rel="stylesheet" href="../css/about.css">
+            <link rel="stylesheet"  href="../css/about.css">
+        <% } %>
+        <% if(title=="Index") {%>
+          <link rel="stylesheet"  href="../css/portfolio.css">
+          <script type="text/javascript" src='../js/fadein.js'> </script>
+        <% } %>
+        <% if(title == "My story into WeBDeV") { %>
+          <link rel="stylesheet"  href="../css/mystory.css">
+          <script type="text/javascript" src='../js/mystory.js'></script>
+        <% } %>
+
+
+        <% if(title == "Book a meeting") { %>
+          <link rel="stylesheet" href="../css/calendar.css">
+          <!-- Bootstrap -->
+          <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+             <!-- Bootstrap Date-Picker Plugin -->
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css">
+      
+          <!-- MomentJS -->
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js" integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA=" crossorigin="anonymous"></script>
+        
         <% } %>
 
 
     </head>
-
-    <body>
+       <body>
+        <% if(title=="About me") {%>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <% } else { %>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <% } %>
             <div class="container">
               <a class="navbar-brand" href='/'>Iosif WeBDeV</a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +86,7 @@
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href='/blog'>Blog</a>
-                    <% if(title == "Blog" || title== "Login" || title=="Register" || title=="Add Articles" || title=="Edit Article") { %>
+                    <% if(title == "Blog" || title== "Login" || title=="Register" || title=="Add Articles" || title=="Edit Article" || title=="Book a meeting") { %>
                         <span class="sr-only">(current)</span>
                         <% if(locals.user) { %>
                             <% if(locals.user.admin == true) { %>
@@ -87,10 +113,13 @@
                       <% } %>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href='/book'>Book a meeting!</a>
+                    <a class="nav-link" href='/events/calendar'>Book a meeting!</a>
                     <% if(title == "Book a meeting") { %>
                         <span class="sr-only">(current)</span>
                       <% } %>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href='/#contact'>Contact me</a>
                   </li>
                  
                 </ul>
@@ -109,16 +138,66 @@
               <% } %>
           <% } %>
     </body>
+  </body>
       <!-- Footer -->
+  <% if(title != "My story into WeBDeV") { %>
   <footer class="py-5 bg-dark">
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; Iosif the WeBDeV consultancy - 2020</p>
     </div>
+  <% } %>
     <!-- /.container -->
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="../vendor/jquery/jquery.min.js"></script>
-  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src='../js/main.js'> </script>
+  <script type="text/javascript" src='../js/main.js'> </script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <% if(title=="Index") {%>
+    <script type="text/javascript" src='../js/fadein.js'> </script>
+  <% } %>
+  <% if(title == "My story into WeBDeV") { %>
+    <script type="text/javascript" src='../js/mystory.js'></script>
+  <% } %>
+
+  <% if(title == "Book a meeting") { %>
+    <script>
+      $(document).ready(function () {
+          var date_input = $('input[name="date"]');
+          var container = $('form.add-event-form').length > 0 ? $('form.add-event-form').parent() : "body";
+          var options = {
+              format: 'dd/mm/yyyy',
+              container: container,
+              todayHighlight: true,
+              autoclose: true,
+          };
+
+          date_input.on('changeDate', function() {
+              console.log(date_input.datepicker('getDate'));
+          });
+          date_input.datepicker(options);
+      })
+  </script>
+  <% } %> 
+
+  <% if(title=="Index") { %>
+    <script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        // Google Maps setup
+        var googlemap = new google.maps.Map(
+            document.getElementById('googlemap'),
+            {
+                center: new google.maps.LatLng(44.434664928, 26.1006695973),
+                zoom: 8,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+        );
+    });
+</script>
+<% } %>
+
 </html>
+
+
+ 

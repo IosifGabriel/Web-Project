@@ -21,8 +21,8 @@
   
   /* If you want the content centered horizontally and vertically */
   .centered {
-    position: absolute;
-    top: 92%;
+    position: relative;
+    top:72%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -32,4 +32,52 @@
   .centered img {
     width: 150px;
     border-radius: 50%;
+  }
+
+  @media only screen and (max-width: 1350px) {
+    .centered{
+      top:85%;
+    }
+
+  @media only screen and (max-width: 912px) {
+    .centered{
+      top:95%;
+    }
+
+    @media only screen and (max-width: 740px) {
+      .left{
+        width:0%;
+      }
+      .right{
+        width:100%;
+      }
+      .centered{
+        top:97%;
+      }
+    }
+
+
+    @media only screen and (max-width: 600px) {
+      .left{
+        width:0%;
+      }
+      .right{
+        width:100%;
+      }
+      .centered{
+        top:100%;
+      }
+    }
+
+    @media only screen and (max-width: 360px) {
+      .left{
+        width:0%;
+      }
+      .right{
+        width:100%;
+      }
+      .centered{
+        top:150%;
+      }
+    }
   }

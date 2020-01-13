@@ -1,0 +1,88 @@
+.currentmonth {
+    border: 1px solid lightgray;
+    color: inherit;
+    text-align: center;
+    font-size: 1.3em;
+}
+
+.has-event {
+    cursor: pointer;
+    position: relative;
+}
+
+.has-event::after {
+    background-color: tomato;
+    border-radius: 50%;
+    content: '';
+    height: 5px;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    width: 5px;
+}
+
+.currentday {
+    border: 1px solid lightgray;
+    background-color: lightgreen;
+    /* color: tomato; */
+    font-size: 1.3em;
+    text-align: center;
+}
+
+.weekdays {
+    font-weight: bold;
+}
+
+table.calendar {
+    display: inline-block;
+    vertical-align: top;
+    margin: 1em auto;
+}
+
+table.calendar td,
+table.calendar th {
+    padding: .5em;
+}
+
+#calendar-container {
+    display: flex;
+    justify-content: center;
+}
+
+@media (min-width: 576px) {
+    table.calendar td,
+    table.calendar th {
+        padding: 1em;
+    }
+
+    .has-event::after {
+        right: 5px;
+        top: 5px;
+    }
+}
+
+@media (min-width: 768px) {
+    table.calendar td,
+    table.calendar th {
+        padding: 1.5em;
+    }
+
+    .has-event::after {
+        height: 7px;
+        right: 7px;
+        top: 7px;
+        width: 7px;
+    }
+}
+
+@media (min-width: 992px) {
+    table.calendar td,
+    table.calendar th {
+        padding: 2em;
+    }
+
+    .has-event::after {
+        right: 9x;
+        top: 9px;
+    }
+}

@@ -10,9 +10,9 @@ const config = require('./config/database');
 const expressLayouts = require('express-ejs-layouts');
 const ejsLint = require('ejs-lint');
 
+
 mongoose.connect('mongodb://localhost/blogdb');
 let db = mongoose.connection;
-
 
 
 //Check connection
@@ -112,6 +112,12 @@ app.get('/about',function(req,res){
     });
 });
 
+app.get('/mystory',function(req,res){
+    res.render('mystory',{
+            title:'My story into WeBDeV'
+    });
+});
+
 
 
 app.get('/blog',function(req,res){
@@ -138,8 +144,10 @@ app.get('/blog',function(req,res){
 
 let articles = require ('./routes/articles');
 let users = require ('./routes/users');
+let events = require('./routes/events')
 app.use('/articles', articles);
 app.use('/users', users);
+app.use('/events', events);
 
 //start server
 app.listen(3000,function(){

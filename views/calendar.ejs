@@ -1,0 +1,262 @@
+<!-- Source for script -> https://github.com/akkis/app-calendar -->
+<h1 class="mt-4" style="padding-left:25%;">Calendar for <%= user.name %></h1>
+
+<a href="/events/add" style="margin-left:30%;" class="btn btn-secondary mt-4 mb-4">Add new event</a>
+
+<div class="row">
+    <div class="btn-group" style="padding-left:25%;" role="group" aria-label="Change month">
+        <button type="button" style="margin-left:25%;" class="btn btn-primary btn-sm prev-month" disabled>previous month</button>
+        <button type="button"  style="margin-left:5%;" class="btn btn-primary btn-sm next-month">next month</button>
+    </div>
+</div>
+<div id="calendar-container"></div>
+
+<h3 class="mt-4 date-tag text-center"></h3>
+
+<div class="cards"></div>
+
+<script>
+$(document).ready(function () {
+    const events = <%- JSON.stringify(events) %>,
+          $prevMonthButton = $('.btn.prev-month'),
+          $nextMonthButton = $('.btn.next-month'),
+          $cards = $('.cards'),
+          $dateTag = $('.date-tag');
+    let currentMonth = 0;
+   
+    function clearEventsCards() {
+        $cards.empty();
+        $dateTag.html('');
+    }
+
+    function calendar(month) {
+        var padding = '',
+            totalFeb = '',
+            i = 1,
+            testing = '',
+            cellclass = '';
+
+        var current = new Date(),
+            cmonth = current.getMonth(),
+            day = current.getDate(),
+            year = current.getFullYear(),
+            tempMonth = month + 1, 
+            prevMonth = month - 1;
+
+        if (month == 1) {
+            if ((year % 100 !== 0) && (year % 4 === 0) || (year % 400 === 0)) {
+                totalFeb = 29;
+            } else {
+                totalFeb = 28;
+            }
+        }
+
+
+        var monthNames = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
+            dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thrusday", "Friday", "Saturday"],
+            totalDays = ["31", "" + totalFeb + "", "31", "30", "31", "30", "31", "31", "30", "31", "30", "31"];
+
+       
+
+        var tempDate = new Date(tempMonth + ' 1 ,' + year),
+            tempweekday = tempDate.getDay(),
+            tempweekday2 = tempweekday,
+            dayAmount = totalDays[month];
+
+    
+
+        while (tempweekday > 0) {
+            padding += "<td class='premonth'></td>";
+            tempweekday--;
+        }
+     
+
+        while (i <= dayAmount) {
+
+          
+
+            if (tempweekday2 > 6) {
+                tempweekday2 = 0;
+                padding += "</tr><tr>";
+            }
+
+
+            if (i == day && month == cmonth) {
+                cellclass = 'currentmonth currentday';
+               
+            } else {
+                cellclass = 'currentmonth';
+             
+            }
+
+            padding += `<td class='${cellclass}' data-date="${i}" data-month="${tempMonth}" data-year="${year}">${i}</td>`;
+
+            tempweekday2++;
+            i++;
+        }
+
+
+   
+        var calendarTable = "<table class='calendar'> <tr class='currentmonth'><th colspan='7'>" + monthNames[month] + " " + year + "</th></tr>";
+        calendarTable += "<tr class='weekdays'>  <td>Sun</td>  <td>Mon</td> <td>Tue</td> <td>Wed</td> <td>Thurs</td> <td>Fri</td> <td>Sat</td> </tr>";
+        calendarTable += "<tr>";
+        calendarTable += padding;
+        calendarTable += "</tr></table>";
+
+        document.getElementById("calendar-container").innerHTML = calendarTable;
+    }
+
+    function ckeckMonthForEvents() {
+        if (events.length > 0) {
+            const monthsNames = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+            let eventsOnMonth = new Array();
+
+            $('.currentmonth').each(function (index, element) {
+                const $this = $(element),
+                    dateStringDate = $this.data('date'),
+                    dateStringMonth = $this.data('month'),
+                    dateStringYear = $this.data('year');
+
+                let dateString = '';
+
+                if (typeof dateStringDate !== 'undefined' &&
+                    typeof dateStringMonth !== 'undefined' &&
+                    typeof dateStringYear !== 'undefined') {
+
+                    events.forEach(event => {
+                        let eventDate = new Date(event.startdate);
+                        if (dateStringDate === eventDate.getDate() &&
+                            dateStringMonth === (eventDate.getMonth() + 1) &&
+                            dateStringYear === eventDate.getFullYear()) {
+
+                         
+                            $this.addClass('has-event');
+
+                           
+                            eventsOnMonth.push(event);
+
+                        }
+                    });
+                }
+
+                if ($this.hasClass('has-event')) {
+                    $this.on('click', ev => {
+                        clearEventsCards()
+
+                       
+                        $dateTag.html(`${String(dateStringDate).padStart(2, 0)}/${String(dateStringMonth).padStart(2, 0)}`);
+
+                        eventsOnMonth.forEach(event => {
+                            let eventTime = new Date(event.startdate);
+                            
+                  
+                            if (dateStringDate === eventTime.getDate()) {
+
+                                // Card
+                                let $card = $('<div/>', {
+                                    class: 'card mb-4 mt-4'
+                                }).appendTo($cards);
+
+                                // Event Title
+                                $('<h4/>', {
+                                    class: 'card-header',
+                                    html: event.title
+                                }).appendTo($card);
+
+                                // Card Body
+                                let $cardBody = $('<div/>', {
+                                    class: 'card-body'
+                                }).appendTo($card);
+
+                                // Event Date
+                                $('<h5/>', {
+                                    class: 'card-title',
+                                    html: 'Time'
+                                }).appendTo($cardBody);
+                                $('<div/>', {
+                                    class: 'card-text',
+                                    html: `${String(eventTime.getHours()).padStart(2, 0)}:${String(eventTime.getMinutes()).padStart(2, 0)}`
+                                }).appendTo($cardBody);
+
+                                if(<%= admin %> == true){
+                                        $('<h5/>', {
+                                        class: 'card-title mt-4',
+                                        html: 'Author'
+                                        }).appendTo($cardBody);
+                                        $('<div/>', {
+                                        class: 'card-text',
+                                        html: event.username
+                                        }).appendTo($cardBody);
+
+                                         $('<h5/>', {
+                                         class: 'card-title mt-4',
+                                         html: 'Authors email'
+                                        }).appendTo($cardBody);
+                                        $('<div/>', {
+                                        class: 'card-text',
+                                        html: event.useremail
+                                        }).appendTo($cardBody);
+                                    
+                                        $('<h5/>', {
+                                        class: 'card-title mt-4',
+                                        html: 'Authors phone'
+                                        }).appendTo($cardBody);
+                                        $('<div/>', {
+                                        class: 'card-text',
+                                        html: event.userphone
+                                        }).appendTo($cardBody);
+                                    };
+                                // Event Description
+                                $('<h5/>', {
+                                    class: 'card-title mt-4',
+                                    html: 'Description'
+                                }).appendTo($cardBody);
+                                $('<div/>', {
+                                    class: 'card-text',
+                                    html: event.description
+                                }).appendTo($cardBody);
+                            }
+                        });
+                    });
+                }
+            });
+        }
+    }
+
+
+    calendar(currentMonth);
+    ckeckMonthForEvents();
+
+    $nextMonthButton.on('click', (ev) => {
+        currentMonth++;
+        $prevMonthButton.prop('disabled', false);
+        clearEventsCards();
+
+        if ((currentMonth + 1) > 11 ) {
+            currentMonth = 11;
+            calendar(currentMonth);
+            ckeckMonthForEvents();
+            $nextMonthButton.prop('disabled', true);
+        } else {
+            calendar(currentMonth);
+            ckeckMonthForEvents();
+        }
+    });
+
+    $prevMonthButton.on('click', (ev) => {
+        currentMonth--;
+        $nextMonthButton.prop('disabled', false);
+        clearEventsCards();
+
+        if ((currentMonth - 1) < 0) {
+            currentMonth = 0;
+            calendar(currentMonth);
+            ckeckMonthForEvents();
+            $prevMonthButton.prop('disabled', true);
+        } else {
+            calendar(currentMonth);
+            ckeckMonthForEvents();
+        }
+    });
+});
+</script>

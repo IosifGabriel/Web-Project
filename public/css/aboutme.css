@@ -1,0 +1,30 @@
+.sidetwo {
+    display: inline-block;
+    vertical-align: top;  
+    background-color: #3B3355;
+    width: 50%;
+    height: 100vh;
+    z-index: 2;
+    border-right: 45px solid #3B3355;
+    flex: auto;
+    max-width: 930px;
+    min-width: 900px;
+    justify-content: flex-start;
+}
+
+.sideone {
+    display: inline-block;
+    vertical-align: top;
+    background: url("../images/Aboutmepage.jpg") no-repeat;
+    background-position: center;
+    background-size: cover;
+    filter: blur(3px);
+    width: 50%;
+    height: 100vh;
+    transform: scale(1.03);
+    background-size: 175% auto;   
+    z-index: 1;
+    max-width: 73em;
+    min-width: 73em;
+    justify-content: flex-end;
+}

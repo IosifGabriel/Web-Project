@@ -3,11 +3,11 @@ html {
   }
 
 .paral {
-    min-height: 768px;
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: 50% 50%;
-    border-radius:0%;
+    min-height: 768px !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
+    background-position: 50% 50% !important;
+    border-radius:0% !important;
     }
 
 .paralsmall{
@@ -87,4 +87,25 @@ html {
 
 .h1{
     padding-bottom:30px;
+}
+
+
+.fade  {
+    opacity:0;
+}
+
+.my-form {
+    color: #305896;
+}
+.my-form .btn-default {
+    background-color: #305896;
+    color: #fff;
+    border-radius: 0;
+}
+.my-form .btn-default:hover {
+    background-color: #4498C6;
+    color: #fff;
+}
+.my-form .form-control {
+    border-radius: 0;
 }
